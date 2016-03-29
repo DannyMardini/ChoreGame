@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
               app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <TextView
         android:id="@+id/choreName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/chore_list_padding"
+        android:paddingBottom="@dimen/chore_list_padding"
+        android:paddingLeft="@dimen/chore_list_padding_left"
+        android:textSize="@dimen/chore_list_text_size" />
+    <TextView
+        android:id="@+id/chorePoints"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:gravity="end"
+        android:textSize="@dimen/chore_list_text_size"
+        android:paddingRight="@dimen/chore_list_point_padding_right"/>
 </LinearLayout>

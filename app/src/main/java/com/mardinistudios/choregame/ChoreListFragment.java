@@ -21,9 +21,6 @@ public class ChoreListFragment extends ListFragment {
     private List<HashMap<String, String>> data;
     private ListAdapter adapter;
 
-    public ChoreListFragment() {
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +35,25 @@ public class ChoreListFragment extends ListFragment {
                 "Water the plants"
         };
 
-        for(String chore : chores) {
+        int[] points = new int[] {
+                3,
+                2,
+                1,
+                1,
+                1
+        };
+
+        for (int i = 0; i < chores.length; i++) {
+            String chore = chores[i];
+            int point = points[i];
             HashMap<String, String> row = new HashMap<String, String>();
             row.put("title", chore);
+            row.put("points", Integer.toString(point));
             data.add(row);
         }
 
-        String[] from = new String[] { "title" };
-        int[] to = new int[] { R.id.choreName };
+        String[] from = new String[] { "title", "points" };
+        int[] to = new int[] { R.id.choreName, R.id.chorePoints };
 
         this.adapter = new SimpleAdapter(getActivity(), data, R.layout.chore_list, from, to);
         setListAdapter(this.adapter);
