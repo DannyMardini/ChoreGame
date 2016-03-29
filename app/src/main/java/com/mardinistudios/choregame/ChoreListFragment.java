@@ -52,8 +52,8 @@ public class ChoreListFragment extends ListFragment {
             data.add(row);
         }
 
-        String[] from = new String[] { "title", "points" };
-        int[] to = new int[] { R.id.choreName, R.id.chorePoints };
+        String[] from = new String[] { "checkbox", "title", "points" };
+        int[] to = new int[] { R.id.choreCheckbox, R.id.choreName, R.id.chorePoints };
 
         this.adapter = new SimpleAdapter(getActivity(), data, R.layout.chore_list, from, to);
         setListAdapter(this.adapter);
