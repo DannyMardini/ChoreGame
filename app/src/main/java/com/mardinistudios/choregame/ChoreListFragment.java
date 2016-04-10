@@ -2,6 +2,7 @@ package com.mardinistudios.choregame;
 
 import android.app.Fragment;
 import android.app.ListFragment;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import java.util.Map;
  */
 public class ChoreListFragment extends ListFragment {
     private List<HashMap<String, String>> data;
-    private ListAdapter adapter;
+    private SimpleAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,12 +57,14 @@ public class ChoreListFragment extends ListFragment {
         int[] to = new int[] { R.id.choreCheckbox, R.id.choreName, R.id.chorePoints };
 
         this.adapter = new SimpleAdapter(getActivity(), data, R.layout.chore_list, from, to);
-        setListAdapter(this.adapter);
+        setListAdapter(adapter);
     }
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        View v = inflater.inflate(R.layout.chore_list, container, false);
-//        return v;
-//    }
+
+    public void addNewChore() {
+        HashMap<String, String> newRow = new HashMap<String, String>();
+        newRow.put("title", "New Chore");
+        newRow.put("points", "0");
+        data.add(newRow);
+        adapter.notifyDataSetChanged();
+    }
 }
