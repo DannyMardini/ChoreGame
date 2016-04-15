@@ -1,24 +1,21 @@
 package com.mardinistudios.choregame;
 
-import android.app.Fragment;
 import android.app.ListFragment;
-import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by mardinid on 3/27/16.
  */
 public class ChoreListFragment extends ListFragment {
+    private static final String TAG = "ChoreListFragment";
     private List<HashMap<String, String>> data;
     private SimpleAdapter adapter;
 
@@ -58,6 +55,11 @@ public class ChoreListFragment extends ListFragment {
 
         this.adapter = new SimpleAdapter(getActivity(), data, R.layout.chore_list, from, to);
         setListAdapter(adapter);
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Log.d(TAG, "listItemClicked");
     }
 
     public void addNewChore() {
