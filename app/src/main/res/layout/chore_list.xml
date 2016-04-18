@@ -3,22 +3,23 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="horizontal"
               android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              app:layout_behavior="@string/appbar_scrolling_view_behavior">
+              android:layout_height="wrap_content">
     <CheckBox
         android:id="@+id/choreCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:focusable="false"/>
-    <TextView
+    <EditText
         android:id="@+id/choreName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/chore_list_padding"
         android:paddingBottom="@dimen/chore_list_padding"
         android:paddingLeft="@dimen/chore_list_padding_left"
-        android:textSize="@dimen/chore_list_text_size" />
+        android:textSize="@dimen/chore_list_text_size"
+        android:editable="true"
+        android:background="@android:color/transparent"/>
     <TextView
         android:id="@+id/chorePoints"
         android:layout_width="fill_parent"

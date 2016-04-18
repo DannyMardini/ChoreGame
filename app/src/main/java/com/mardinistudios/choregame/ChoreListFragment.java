@@ -1,11 +1,13 @@
 package com.mardinistudios.choregame;
 
-import android.app.ListFragment;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+
+import com.mardinistudios.choregame.data.Chore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,16 +16,16 @@ import java.util.List;
 /**
  * Created by mardinid on 3/27/16.
  */
-public class ChoreListFragment extends ListFragment {
+public class ChoreListFragment extends Fragment {
     private static final String TAG = "ChoreListFragment";
-    private List<HashMap<String, String>> data;
-    private SimpleAdapter adapter;
+    private List<Chore> data;
+    private ChoreListAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        data = new ArrayList<HashMap<String, String>>();
+        data = new ArrayList<Chore>();
 
         String[] chores = new String[] {
                 "Do the dishes",
@@ -42,31 +44,33 @@ public class ChoreListFragment extends ListFragment {
         };
 
         for (int i = 0; i < chores.length; i++) {
-            String chore = chores[i];
+            String name = chores[i];
             int point = points[i];
-            HashMap<String, String> row = new HashMap<String, String>();
-            row.put("title", chore);
-            row.put("points", Integer.toString(point));
-            data.add(row);
+            Chore chore = new Chore(name, point);
+            data.add(chore);
         }
-
-        String[] from = new String[] { "checkbox", "title", "points" };
-        int[] to = new int[] { R.id.choreCheckbox, R.id.choreName, R.id.chorePoints };
-
-        this.adapter = new SimpleAdapter(getActivity(), data, R.layout.chore_list, from, to);
-        setListAdapter(adapter);
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Log.d(TAG, "listItemClicked");
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        ListView list = (ListView) getActivity().findViewById(R.id.list);
+        this.adapter = new ChoreListAdapter(getActivity(), data, R.layout.chore_list);
+        list.setAdapter(adapter);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.chore_list_fragment, container, false);
     }
 
     public void addNewChore() {
         HashMap<String, String> newRow = new HashMap<String, String>();
-        newRow.put("title", "New Chore");
-        newRow.put("points", "0");
-        data.add(newRow);
+        Chore chore = new Chore();
+        data.add(chore);
         adapter.notifyDataSetChanged();
     }
 }
