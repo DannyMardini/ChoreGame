@@ -4,7 +4,7 @@ package com.mardinistudios.choregame.data;
  * Created by mardinid on 4/16/16.
  */
 public class Chore {
-    public final String DEFAULT_CHORE_NAME = "New Chore";
+    public final static String DEFAULT_CHORE_NAME = "New Chore";
     private String name;
     private int pointValue;
 
