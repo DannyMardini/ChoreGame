@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.mardinistudios.choregame.data.Chore;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
@@ -24,6 +27,8 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
     private final List<Chore> data;
 
     private final int resource;
+
+    private final HashSet<Integer> selectedItems;
 
     /**
      * Constructor
@@ -41,6 +46,7 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
         this.context = context;
         this.data = data;
         this.resource = resource;
+        this.selectedItems = new HashSet<Integer>();
     }
 
     @Override
@@ -59,7 +65,7 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (position >= getCount()) {
             return null;
         }
@@ -74,8 +80,13 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
         choreName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    Log.i(TAG, "DONE editing, text is: " + v.getText());
+                if (actionId == EditorInfo.IME_ACTION_DONE ||
+                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    final String newName = v.getText().toString();
+                    Log.i(TAG, "DONE editing, text is: " + newName + ", position: " + position);
+                    v.clearFocus();
+                    Chore c = (Chore) getItem(position);
+                    c.setName(newName);
                     return true;
                 }
                 return false;
@@ -85,6 +96,27 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
         TextView points = (TextView) rowView.findViewById(R.id.chorePoints);
         points.setText(String.valueOf(chore.getPointValue()));
 
+        CheckBox checkbox = (CheckBox) rowView.findViewById(R.id.choreCheckbox);
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.i(TAG, "box " + position + " is Checked: " + Boolean.toString(isChecked));
+                if (isChecked) {
+                    selectItem(position);
+                } else {
+                    deselectItem(position);
+                }
+            }
+        });
+
         return rowView;
+    }
+
+    private void selectItem(int position) {
+        selectedItems.add(position);
+    }
+
+    private void deselectItem(int position) {
+        selectedItems.remove(position);
     }
 }
