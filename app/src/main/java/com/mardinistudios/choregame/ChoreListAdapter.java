@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.mardinistudios.choregame.data.Chore;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
@@ -39,17 +38,13 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
      * @param data The data that this adapter contains.
      * @param resource Resource identifier of a view layout that defines the views for this list
      *                 item. The layout file should include at least those named views defined in "to"
-     * @param from A list of column names that will be added to the Map associated with each item.
-     * @param to The views that should display column in the "from" parameter. These should all be
-     *           TextViews. The first N views in this list are given the values of the first N
-     *           columns in the from parameter.
      */
     public ChoreListAdapter(final Context context, final List<Chore> data,
                             final int resource) {
         this.context = context;
         this.data = data;
         this.resource = resource;
-        this.selectedItems = new HashSet<Chore>();
+        this.selectedItems = new HashSet<>();
     }
 
     @Override
