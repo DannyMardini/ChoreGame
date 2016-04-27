@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -78,13 +79,14 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
         choreName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     final String newName = v.getText().toString();
                     Log.i(TAG, "DONE editing, text is: " + newName + ", position: " + position);
-                    v.clearFocus();
                     Chore c = (Chore) getItem(position);
                     c.setName(newName);
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                    v.clearFocus();
                     return true;
                 }
                 return false;

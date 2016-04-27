@@ -19,7 +19,9 @@
         android:paddingLeft="@dimen/chore_list_padding_left"
         android:textSize="@dimen/chore_list_text_size"
         android:editable="true"
-        android:background="@android:color/transparent"/>
+        android:background="@android:color/transparent"
+        android:inputType="text"
+        android:imeOptions="actionDone"/>
     <TextView
         android:id="@+id/chorePoints"
         android:layout_width="fill_parent"
