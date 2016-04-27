@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.mardinistudios.choregame.data.Chore;
+import com.mardinistudios.choregame.data.DataStub;
 import com.mardinistudios.choregame.listeners.FabClickListener;
 
 import java.util.ArrayList;
@@ -29,30 +30,7 @@ public class ChoreListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        data = new ArrayList<Chore>();
-
-        String[] chores = new String[] {
-                "Do the dishes",
-                "Take out the trash",
-                "clean up after the dog",
-                "Make the oats",
-                "Water the plants"
-        };
-
-        int[] points = new int[] {
-                3,
-                2,
-                1,
-                1,
-                1
-        };
-
-        for (int i = 0; i < chores.length; i++) {
-            String name = chores[i];
-            int point = points[i];
-            Chore chore = new Chore(name, point);
-            data.add(chore);
-        }
+        data = DataStub.GetChores();
     }
 
     @Override
