@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.mardinistudios.choregame.data.Chore;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
@@ -28,7 +29,9 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
 
     private final int resource;
 
-    private final HashSet<Integer> selectedItems;
+    private final HashSet<Chore> selectedItems;
+
+    private SelectedItemsListener listener = null;
 
     /**
      * Constructor
@@ -46,7 +49,7 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
         this.context = context;
         this.data = data;
         this.resource = resource;
-        this.selectedItems = new HashSet<Integer>();
+        this.selectedItems = new HashSet<Chore>();
     }
 
     @Override
@@ -112,11 +115,57 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
         return rowView;
     }
 
+    public void addChore(Chore chore) {
+        if (chore != null) {
+            data.add(chore);
+            notifyDataSetChanged();
+        }
+    }
+
+    public void removeSelectedChores() {
+        if (!selectedItems.isEmpty()) {
+            for (Chore chore : selectedItems) {
+                data.remove(chore);
+            }
+            selectedItems.clear();
+            updateZeroItemsSelectedListener();
+            notifyDataSetChanged();
+        }
+    }
+
     private void selectItem(int position) {
-        selectedItems.add(position);
+        int startSize = selectedItems.size();
+        if (selectedItems.add(data.get(position)) && startSize == 0) {
+            updateOnItemsSelectedListener();
+        }
     }
 
     private void deselectItem(int position) {
-        selectedItems.remove(position);
+        if (selectedItems.remove(data.get(position)) && selectedItems.size() == 0) {
+            updateZeroItemsSelectedListener();
+        }
+    }
+
+    private void updateOnItemsSelectedListener() {
+        if (listener != null) {
+            listener.onItemsSelected();
+        }
+    }
+
+    private void updateZeroItemsSelectedListener() {
+        if (listener != null) {
+            listener.onZeroItemsSelected();
+        }
+    }
+
+    public void setSelectedItemsListener(SelectedItemsListener listener) {
+        this.listener = listener;
+    }
+
+    public interface SelectedItemsListener {
+        /** Called when any item is selected (when the first item is selected only). */
+        void onItemsSelected();
+        /** Called when no items are selected. */
+        void onZeroItemsSelected();
     }
 }

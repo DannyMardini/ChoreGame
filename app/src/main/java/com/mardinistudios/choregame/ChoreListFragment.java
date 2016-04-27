@@ -1,13 +1,17 @@
 package com.mardinistudios.choregame;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.mardinistudios.choregame.data.Chore;
+import com.mardinistudios.choregame.listeners.FabClickListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,10 +58,31 @@ public class ChoreListFragment extends Fragment {
     @Override
     public void onActivityCreated (Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        final Activity activity = getActivity();
 
-        ListView list = (ListView) getActivity().findViewById(R.id.list);
+        ListView list = (ListView) activity.findViewById(R.id.list);
         this.adapter = new ChoreListAdapter(getActivity(), data, R.layout.chore_list);
         list.setAdapter(adapter);
+
+        final FloatingActionButton fab = (FloatingActionButton) activity.findViewById(R.id.fab);
+        final FabClickListener fabClickListener = new FabClickListener(this);
+        fab.setOnClickListener(fabClickListener);
+
+        adapter.setSelectedItemsListener(new ChoreListAdapter.SelectedItemsListener() {
+            @Override
+            public void onItemsSelected() {
+                Log.i(TAG, "Items were selected!");
+                fab.setImageResource(R.drawable.minus_icon);
+                fabClickListener.setAction(FabClickListener.Action.REMOVING);
+            }
+
+            @Override
+            public void onZeroItemsSelected() {
+                Log.i(TAG, "Zero items selected!");
+                fab.setImageResource(android.R.drawable.ic_input_add);
+                fabClickListener.setAction(FabClickListener.Action.ADDING);
+            }
+        });
     }
 
     @Override
@@ -68,9 +93,11 @@ public class ChoreListFragment extends Fragment {
     }
 
     public void addNewChore() {
-        HashMap<String, String> newRow = new HashMap<String, String>();
         Chore chore = new Chore();
-        data.add(chore);
-        adapter.notifyDataSetChanged();
+        adapter.addChore(chore);
+    }
+
+    public void removeSelectedChores() {
+        adapter.removeSelectedChores();
     }
 }

@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mardinistudios.choregame.listeners.FabClickListener;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -37,12 +39,6 @@ public class MainActivity extends AppCompatActivity {
         } catch(Resources.NotFoundException e) {
             Log.e(TAG, "Could not find ColorStateList " + R.color.add_chore_button + ": " + e.getMessage());
         }
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                list.addNewChore();
-            }
-        });
     }
 
     @Override
