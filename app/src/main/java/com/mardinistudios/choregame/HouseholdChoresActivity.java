@@ -11,9 +11,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class HouseholdChoresActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "HouseholdChoresActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
