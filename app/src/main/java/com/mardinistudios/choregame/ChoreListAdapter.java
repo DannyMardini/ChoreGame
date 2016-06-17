@@ -31,6 +31,8 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
 
     private final HashSet<Chore> selectedItems;
 
+    private final InputMethodManager imm;
+
     private SelectedItemsListener listener = null;
 
     /**
@@ -46,6 +48,7 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
         this.data = data;
         this.resource = resource;
         this.selectedItems = new HashSet<>();
+        this.imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     @Override
@@ -84,8 +87,7 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
                     Log.i(TAG, "DONE editing, text is: " + newName + ", position: " + position);
                     Chore c = (Chore) getItem(position);
                     c.setName(newName);
-                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);   //Close the keyboard.
                     v.clearFocus();
                     return true;
                 }
