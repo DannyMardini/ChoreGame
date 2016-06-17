@@ -98,6 +98,22 @@ public class ChoreListAdapter extends BaseAdapter implements ListAdapter {
         TextView points = (TextView) rowView.findViewById(R.id.chorePoints);
         points.setText(String.valueOf(chore.getPointValue()));
 
+        points.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    final int newPointValue = Integer.decode(v.getText().toString());
+                    Log.i(TAG, "DONE editing, new point view: " + newPointValue);
+                    Chore c = (Chore) getItem(position);
+                    c.setPointValue(newPointValue);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                    v.clearFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         CheckBox checkbox = (CheckBox) rowView.findViewById(R.id.choreCheckbox);
         checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

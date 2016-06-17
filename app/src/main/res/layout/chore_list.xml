@@ -22,12 +22,16 @@
         android:background="@android:color/transparent"
         android:inputType="text"
         android:imeOptions="actionDone"/>
-    <TextView
+    <EditText
         android:id="@+id/chorePoints"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
         android:gravity="end"
         android:textSize="@dimen/chore_list_text_size"
-        android:paddingRight="@dimen/chore_list_point_padding_right"/>
+        android:paddingRight="@dimen/chore_list_point_padding_right"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:editable="true"
+        android:background="@android:color/transparent"/>
 </LinearLayout>
